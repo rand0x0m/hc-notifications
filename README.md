@@ -5,7 +5,7 @@ Firefox WebExtension that sends notifications to your host OS (if supported) whe
 
 ## Installation
 
-The extension is on an alpha version. Type about:debugging in your Firefox's address bar. Click "Load
+The extension is on alpha version. Type about:debugging in your Firefox's address bar. Click "Load
 Temporary Add-on" and then select manifest.json.
 
 ## License
