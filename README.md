@@ -1,10 +1,11 @@
-# hc-notifications  ## Firefox >= 53.x required
+# hc-notifications  
+### (Min. Firefox API 53.x)
 
 Firefox WebExtension that sends notifications to your host OS (if supported) when you receive new messages on a hack.chat room.
 
 ## Installation
 
-The extension is on an alpha version. Type about:debugging in your Firefox's address bar. Click "Load
+The extension is on alpha version. Type about:debugging in your Firefox's address bar. Click "Load
 Temporary Add-on" and then select manifest.json.
 
 ## License
