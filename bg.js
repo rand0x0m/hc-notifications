@@ -6,27 +6,35 @@ var notificationSet = {};
 
 browser.tabs.onUpdated.addListener(
     function onHandleChange(tabId, changeInfo, tabInfo) {
-        console.log(changeInfo);
-        console.log(tabId);
-        console.log(tabInfo);
-        console.log(notificationSet);
-        console.log("\n");
-        if (tabInfo.url.match(/^https:\/\/hack.chat\/\?.*/)) {
-            if (changeInfo.title &&
-                changeInfo.title.match(/^\(\d+\).*/) &&
-               (!tabInfo.active || !isWindowFocused)) {
+        // console.log(changeInfo);
+        // console.log(tabId);
+        // console.log(tabInfo);
+        // console.log(notificationSet);
 
-                var room = tabInfo.url.substring(19);
+        //then is asynchronous
+        browser.windows.get(tabInfo.windowId).then(
+                function(windowInfo) {
+                    if (tabInfo.url.match(/^https:\/\/hack.chat\/\?.*/)) {
+                        if (changeInfo.title &&
+                            changeInfo.title.match(/^\(\d+\).*/) &&
+                           (!tabInfo.active || !windowInfo.focused)) {
 
-                if (notificationSet[tabId.toString()] === undefined) {
-                    sendNotification(tabId.toString(), "1", room);
-                    notificationSet[tabId.toString()] = 1;
-                } else {
-                    browser.notifications.clear(tabId.toString());
-                    sendNotification(tabId.toString(), ++notificationSet[tabId.toString()] + "", room);
+                            var room = tabInfo.url.substring(19);
+
+                            if (notificationSet[tabId.toString()] === undefined) {
+                                sendNotification(tabId.toString(), "1", room);
+                                notificationSet[tabId.toString()] = 1;
+                            } else {
+                                browser.notifications.clear(tabId.toString());
+                                sendNotification(tabId.toString(), ++notificationSet[tabId.toString()] + "", room);
+                            }
+                        } else if (notificationSet[tabId.toString()] !== undefined) {
+                            browser.notifications.clear(tabId.toString());
+                            notificationSet[tabId.toString()] = undefined;
+                        }
+                    }
                 }
-            }
-        }
+        );
     }
 );
 
@@ -74,14 +82,5 @@ browser.notifications.onClicked.addListener(
                 }
             }
         );
-    }
-);
-
-browser.tabs.onActivated.addListener(
-    function(activeInfo) {
-        if (notificationSet[activeInfo.tabId.toString()] !== undefined) {
-            browser.notifications.clear(activeInfo.tabId.toString());
-            notificationSet[activeInfo.tabId.toString()] = undefined;
-        }
     }
 );
