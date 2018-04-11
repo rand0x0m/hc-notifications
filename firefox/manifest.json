@@ -1,0 +1,20 @@
+{
+
+  "description": "Sends notifications to your host OS (if supported) when you receive new messages on a hack.chat room.",
+  "manifest_version": 2,
+  "name": "hc notifications",
+  "version": "0.1",
+  "icons": {
+    "48": "icons/newmessage.png"
+  },
+
+  "permissions" : [
+      "tabs",
+      "notifications",
+      "activeTab"
+  ],
+
+  "background" : {
+      "scripts" : ["bg.js"]
+  }
+}
