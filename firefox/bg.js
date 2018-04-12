@@ -3,6 +3,11 @@ console.log("Plugin loaded!");
 //var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 var sound = new Audio("sounds/drip.ogg");
 var notificationSet = {};
+var muted = false;
+
+chrome.runtime.onMessage.addListener(function(message) {
+    muted = message.mute;
+});
 
 browser.tabs.onUpdated.addListener(
     function onHandleChange(tabId, changeInfo, tabInfo) {
@@ -48,7 +53,10 @@ function sendNotification(notificationId, unreadMessages, room) {
             "title" : "Message(s) at ?" + room,
         }
     );
-    sound.play();
+
+    if (!muted) {
+        sound.play();
+    }
 }
 
 browser.notifications.onClicked.addListener(

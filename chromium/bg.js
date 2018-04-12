@@ -1,8 +1,13 @@
-console.log("Plugin loaded!");
+//console.log("Plugin loaded!");
 
 //var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 var sound = new Audio("sounds/drip.ogg");
 var notificationSet = {};
+var muted = false;
+
+chrome.runtime.onMessage.addListener(function(message) {
+    muted = message.mute;
+});
 
 chrome.tabs.onUpdated.addListener(
     function onHandleChange(tabId, changeInfo, tabInfo) {
@@ -49,12 +54,14 @@ function sendNotification(notificationId, unreadMessages, room) {
             "title" : "Message(s) at ?" + room
         }
     );
-    sound.play();
+
+    if (!muted) {
+        sound.play();
+    }
 }
 
 chrome.notifications.onClicked.addListener(
     function(notificationId) {
-        console.log("asdf");
         chrome.tabs.get(parseInt(notificationId),
             function(tabInfo) {
                 chrome.windows.get(tabInfo.windowId,
@@ -76,7 +83,7 @@ chrome.notifications.onClicked.addListener(
                 );
             }
         );
-        console.log("focused");
+
         chrome.notifications.clear(notificationId,
             function(wasCleared) {
                 if (wasCleared) {

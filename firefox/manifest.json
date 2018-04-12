@@ -8,10 +8,17 @@
     "48": "icons/newmessage.png"
   },
 
+  "browser_action" : {
+      "default_title" : "hack.chat notifications",
+      "default_popup" : "popup.html",
+      "default_icon"  : "icons/newmessage.png"
+  },
+
   "permissions" : [
       "tabs",
       "notifications",
-      "activeTab"
+      "activeTab",
+      "storage"
   ],
 
   "background" : {

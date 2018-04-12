@@ -1,0 +1,42 @@
+<html>
+        <head>
+            <title>hack.chat notifications</title>
+            <script src="popup.js"></script>
+            <style>
+                body {
+                    width: 150px;
+                }
+
+                .container {
+                    padding: 5px;
+                    display: inline-flex;
+                    width: 100%;
+                    /*min-width is set to auto for flexbox items*/
+                }
+
+                #text {
+                    min-width: 0px;
+                    flex-basis: 80%;
+                    flex-wrap: nowrap;
+                }
+
+                #button {
+                    min-width: 0px;
+                    flex-basis: 20%;
+                    flex-wrap: nowrap;
+                }
+
+            </style>
+            <meta charset="utf-8"/>
+        </head>
+        <body>
+            <div class="container">
+                <p id="text">Mute notifications</p>
+                <p id="button">
+                    <label>
+                        <input id="mute" type="checkbox" name="checkbox" value="Mute">
+                    </label>
+                </p>
+            </div>
+        </body>
+</html>
